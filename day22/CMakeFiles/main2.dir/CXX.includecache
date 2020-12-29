@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/amitav/dev/advent-of-code-2020/day22/main2.cpp
+vector
+-
+string
+-
+algorithm
+-
+iostream
+-
+fstream
+-
+sstream
+-
+cmath
+-
+inttypes.h
+-
+map
+-
+

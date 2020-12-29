@@ -1,8 +1,7 @@
 #include <vector>
 #include <string>
 
-/*
-std::vector<std::string> input = {
+std::vector<std::string> input_file = {
   "nop +355",
   "acc +46",
   "jmp +42",
@@ -635,26 +634,81 @@ std::vector<std::string> input = {
   "acc +21",
   "jmp +1",
 };
-*/
 
-std::vector<std::string> input = {
-  "nop +0",
-  "acc +1",
-  "jmp +4",
-  "acc +3",
-  "jmp -3",
-  "acc -99",
-  "acc +1",
-  "jmp -4",
-  "acc +6",
-};
+// std::vector<std::string> input = {
+  // "nop +0",
+  // "acc +1",
+  // "jmp +4",
+  // "acc +3",
+  // "jmp -3",
+  // "acc -99",
+  // "acc +1",
+  // "jmp -4",
+  // "acc +6",
+// };
 
-int main() {
+int part1(std::vector<std::string> input) {
   int acc = 0;
 
   for (int i = 0; i < input.size(); ++i) {
-    printf("%s\n", input[i].c_str());
+    if (input[i].find("u") != -1) {
+      break;
+    }
+    if (input[i].substr(0, 3) == "acc") {
+      int val = std::stoi(input[i].substr(input[i].find(" ")));
+      acc += val;
+    } else if (input[i].substr(0, 3) == "jmp") {
+      int val = std::stoi(input[i].substr(input[i].find(" ")));
+      i += (val - 1);
+    }
+    input[i] += " u";
   }
+  return acc;
+}
 
+std::vector<int> runCodeP2(std::vector<std::string> input) {
+  int acc = 0;
+  int stepCount = 0;
+  for (int i = 0; i < input.size() && stepCount < 1000; ++i) {
+    if (input[i].substr(0, 3) == "acc") {
+      int val = std::stoi(input[i].substr(input[i].find(" ")));
+      acc += val;
+    } else if (input[i].substr(0, 3) == "jmp") {
+      int val = std::stoi(input[i].substr(input[i].find(" ")));
+      i += (val - 1);
+    }
+    stepCount++;
+  }
+  return {acc, stepCount};
+}
+
+int part2() {
+  int acc = 0;
+  int prev = 0;
+
+  for (int i = 0; i < input_file.size(); ++i) {
+    std::vector<std::string> _input = input_file;
+    if (_input[i].substr(0, 3) == "jmp") {
+      _input[i] = "nop" + _input[i].substr(4);
+      std::vector<int> result = runCodeP2(_input);
+      if (result[1] < input_file.size()) {
+        acc = result[0];
+        break;
+      }
+    } else if (_input[i].substr(0, 3) == "nop") {
+      _input[i] = "jpm" + _input[i].substr(4);
+      std::vector<int> result = runCodeP2(_input);
+      if (result[1] < input_file.size()) {
+        acc = result[0];
+        break;
+      }
+    }
+  }
+  return acc;
+}
+
+int main() {
+  printf("PART 2 %d\n", part2());
   return 0;
 }
+

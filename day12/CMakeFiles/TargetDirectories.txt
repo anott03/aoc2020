@@ -1,0 +1,4 @@
+/home/amitav/dev/advent-of-code-2020/day12/CMakeFiles/rebuild_cache.dir
+/home/amitav/dev/advent-of-code-2020/day12/CMakeFiles/edit_cache.dir
+/home/amitav/dev/advent-of-code-2020/day12/CMakeFiles/main2.dir
+/home/amitav/dev/advent-of-code-2020/day12/CMakeFiles/main.dir
