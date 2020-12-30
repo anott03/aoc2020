@@ -1,112 +1,118 @@
 import * as fs from 'fs';
 
-let input = fs.readFileSync('./input.test', 'utf-8').trim().split('\n')
-let activeCubes = [];
-input.forEach((line, i) => {
-  line.split('').forEach((c, j) => {
-    if (c === '#') activeCubes.push({x: j, y: i, z: 0});
-  });
-});
-
-for (let _ = 0; _ < 6; _++) {
-  let newActiveCubes = [];
-  let check = [];
-  for (let {x, y, z} of activeCubes) {
-    for (let i = 1; i < 27; ++i) {
-      let b3 = i.toString(3).padStart(3, '0').split('').reverse();
-      const nx = x + (b3[0] == '2' ? -1 : parseInt(b3[0]));
-      const ny = y + (b3[1] == '2' ? -1 : parseInt(b3[1]));
-      const nz = z + (b3[2] == '2' ? -1 : parseInt(b3[2]));
-      check.push({x: nx, y: ny, z: nz});
-    }
-  }
-
-  for (let {x, y, z} of check) {
-    let activeNeighbors = 0;
-    for (let i = 1; i < 27; ++i) {
-      let b3 = i.toString(3).padStart(3, '0').split('').reverse();
-      const nx = x + (b3[0] == '2' ? -1 : parseInt(b3[0]));
-      const ny = y + (b3[1] == '2' ? -1 : parseInt(b3[1]));
-      const nz = z + (b3[2] == '2' ? -1 : parseInt(b3[2]));
-      if (activeCubes.includes({x: nx, y: ny, z: nz})) {
-        ++activeNeighbors;
+const part1 = () => {
+  let input = fs.readFileSync('./input.prod', 'utf-8').trim().split('\n')
+  let activeCubes = new Set();
+  input.forEach((line, i) => {
+    line.split('').forEach((c, j) => {
+      if (c === '#') {
+        activeCubes.add(`x${j}y${i}z0`);
+        console.log(j, i, 0);
       }
-    }
+    });
+  });
 
-    if (activeCubes.includes({x: x, y: y, z: z})) {
-      if (activeNeighbors === 2 || activeNeighbors === 3) newActiveCubes.push({x: x, y: y, z: z});
-    } else {
-      if (activeNeighbors === 3) newActiveCubes.push({x: x, y: y, z: z});
-    }
+  for (let _ = 0; _ < 6; _++) {
+    let newActiveCubes = new Set();
+    let check = new Set();
+    activeCubes.forEach((s: string) => {
+      let x = parseInt(s.substring(1, s.indexOf('y')));
+      let y = parseInt(s.substring(s.indexOf('y') + 1, s.indexOf('z')));
+      let z = parseInt(s.substring(s.indexOf('z') + 1));
+      for (let i = 1; i < 27; ++i) {
+        let b3 = i.toString(3).padStart(3, '0').split('').reverse();
+        const nx = x + (b3[0] == '2' ? -1 : parseInt(b3[0]));
+        const ny = y + (b3[1] == '2' ? -1 : parseInt(b3[1]));
+        const nz = z + (b3[2] == '2' ? -1 : parseInt(b3[2]));
+        check.add(`x${nx}y${ny}z${nz}`);
+      }
+    });
+
+    check.forEach((s: string) => {
+      let activeNeighbors = 0;
+      let x = parseInt(s.substring(1, s.indexOf('y')));
+      let y = parseInt(s.substring(s.indexOf('y') + 1, s.indexOf('z')));
+      let z = parseInt(s.substring(s.indexOf('z') + 1));
+      for (let i = 1; i < 27; ++i) {
+        let b3 = i.toString(3).padStart(3, '0').split('').reverse();
+        const nx = x + (b3[0] == '2' ? -1 : parseInt(b3[0]));
+        const ny = y + (b3[1] == '2' ? -1 : parseInt(b3[1]));
+        const nz = z + (b3[2] == '2' ? -1 : parseInt(b3[2]));
+
+        if (activeCubes.has(`x${nx}y${ny}z${nz}`)) {
+          ++activeNeighbors;
+        }
+      }
+
+      if (activeCubes.has(`x${x}y${y}z${z}`)) {
+        if (activeNeighbors === 2 || activeNeighbors === 3) newActiveCubes.add(`x${x}y${y}z${z}`);
+      } else {
+        if (activeNeighbors === 3) newActiveCubes.add(`x${x}y${y}z${z}`);
+      }
+    });
+
+    console.log(newActiveCubes);
+    activeCubes = newActiveCubes;
   }
-
-  console.log(newActiveCubes);
-  activeCubes = newActiveCubes;
+  console.log('PART 1', activeCubes.size);
 }
 
-console.log('PART 1', activeCubes.length);
+const part2 = () => {
+  let input = fs.readFileSync('./input.test', 'utf-8').trim().split('\n')
+  let activeCubes = new Set();
+  input.forEach((line, i) => {
+    line.split('').forEach((c, j) => {
+      if (c === '#') {
+        activeCubes.add(`x${j}y${i}z0w0`);
+      }
+    });
+  });
 
+  for (let _ = 0; _ < 6; _++) {
+    let newActiveCubes = new Set();
+    let check = new Set();
+    activeCubes.forEach((s: string) => {
+      let x = parseInt(s.substring(1, s.indexOf('y')));
+      let y = parseInt(s.substring(s.indexOf('y') + 1, s.indexOf('z')));
+      let z = parseInt(s.substring(s.indexOf('z') + 1, s.indexOf('w')));
+      let w = parseInt(s.substring(s.indexOf('z') + 1));
+      for (let i = 1; i < Math.pow(4, 4); ++i) {
+        let b3 = i.toString(4).padStart(3, '0').split('').reverse();
+        const nx = x + (b3[0] == '2' ? -1 : parseInt(b3[0]));
+        const ny = y + (b3[1] == '2' ? -1 : parseInt(b3[1]));
+        const nz = z + (b3[2] == '2' ? -1 : parseInt(b3[2]));
+        check.add(`x${nx}y${ny}z${nz}`);
+      }
+    });
 
-// class Cube {
-  // x: number;
-  // y: number;
-  // z: number;
-  // active: boolean;
+    check.forEach((s: string) => {
+      let activeNeighbors = 0;
+      let x = parseInt(s.substring(1, s.indexOf('y')));
+      let y = parseInt(s.substring(s.indexOf('y') + 1, s.indexOf('z')));
+      let z = parseInt(s.substring(s.indexOf('z') + 1));
+      for (let i = 1; i < 27; ++i) {
+        let b3 = i.toString(3).padStart(3, '0').split('').reverse();
+        const nx = x + (b3[0] == '2' ? -1 : parseInt(b3[0]));
+        const ny = y + (b3[1] == '2' ? -1 : parseInt(b3[1]));
+        const nz = z + (b3[2] == '2' ? -1 : parseInt(b3[2]));
 
-  // constructor(x: number, y: number, z: number, active: boolean = false) {
-    // this.x = x;
-    // this.y = y;
-    // this.z = z;
-    // this.active = active;
-  // }
-// }
+        if (activeCubes.has(`x${nx}y${ny}z${nz}`)) {
+          ++activeNeighbors;
+        }
+      }
 
-// let input = fs.readFileSync('./input.test', 'utf-8').trim().split('\n')
-// let cubes: Map<string, Cube> = new Map();
-// let newCubes = new Map();
-// let totalActiveCubes = 0;
+      if (activeCubes.has(`x${x}y${y}z${z}`)) {
+        if (activeNeighbors === 2 || activeNeighbors === 3) newActiveCubes.add(`x${x}y${y}z${z}`);
+      } else {
+        if (activeNeighbors === 3) newActiveCubes.add(`x${x}y${y}z${z}`);
+      }
+    });
 
-// for (let i = 0; i < input.length; ++i) {
-  // for (let j = 0; j < input[i].length; ++j) {
-    // let c: string  = input[i].charAt(j);
-    // cubes.set(`x${j}y${i}z0`, new Cube(j, i, 0, c === '#'));
-  // }
-// }
+    console.log(newActiveCubes);
+    activeCubes = newActiveCubes;
+  }
+  console.log('PART 1', activeCubes.size);
+}
 
-// function calculateActiveNeighbors(c: Cube) {
-  // let activeNeighbors = 0;
-  // for (let i = 1; i < 27; ++i) {
-    // let b3 = i.toString(3).padStart(3, '0').split('').reverse();
-    // const nx = c.x + (b3[0] == '2' ? -1 : parseInt(b3[0]));
-    // const ny = c.y + (b3[1] == '2' ? -1 : parseInt(b3[1]));
-    // const nz = c.z + (b3[2] == '2' ? -1 : parseInt(b3[2]));
-
-    // const nkey = `x${nx}y${ny}z${nz}`
-    // if (cubes.get(nkey)) {
-      // if (cubes.get(nkey).active) activeNeighbors++;
-    // } else newCubes.set(nkey, new Cube(nx, ny, nz, false));
-  // }
-  // return activeNeighbors;
-// }
-
-// for (let i = 0; i < 1; ++i) {
-  // cubes.forEach((cube, key) => {
-    // console.log(cube);
-    // let activeNeighbors = calculateActiveNeighbors(cube);
-    // if (cube.active) {
-      // if (activeNeighbors === 2 || activeNeighbors === 3) console.log('remain active');
-      // else console.log('become inactive');
-    // } else {
-      // if (activeNeighbors === 3) console.log('become active');
-      // else console.log('remain inactive');
-    // }
-  // });
-// }
-
-// console.log(calculateActiveNeighbors(cubes.get(`x2y1z0`)));
-
-// cubes.forEach((cube, _) => {
-  // totalActiveCubes += cube.active ? 1 : 0;
-// });
-
-// console.log('PART 1', totalActiveCubes);
+// part1();
+part2();
