@@ -66,6 +66,8 @@ function part2() {
 
   let sum = 0;
   for (let line of input) {
+    // this only works because none of the original
+    // equations have more than one digit long numberes
     let x = solve(line.replace(/ /g, '').split('').join('/'));
     sum += x;
   }
