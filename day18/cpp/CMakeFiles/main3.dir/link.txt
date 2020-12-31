@@ -1,1 +1,0 @@
-/usr/bin/c++ -rdynamic CMakeFiles/main3.dir/main3.cpp.o -o main3 
