@@ -7,7 +7,6 @@ const part1 = () => {
     line.split('').forEach((c, j) => {
       if (c === '#') {
         activeCubes.add(`x${j}y${i}z0`);
-        console.log(j, i, 0);
       }
     });
   });
@@ -51,7 +50,6 @@ const part1 = () => {
       }
     });
 
-    console.log(newActiveCubes);
     activeCubes = newActiveCubes;
   }
   console.log('PART 1', activeCubes.size);
@@ -113,11 +111,10 @@ const part2 = () => {
       }
     });
 
-    console.log(newActiveCubes);
     activeCubes = newActiveCubes;
   }
   console.log('PART 2', activeCubes.size);
 }
 
-// part1();
+part1();
 part2();

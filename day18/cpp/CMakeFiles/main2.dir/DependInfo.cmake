@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/amitav/dev/advent-of-code-2020/day18/main2.cpp" "/home/amitav/dev/advent-of-code-2020/day18/CMakeFiles/main2.dir/main2.cpp.o"
+  "/home/amitav/dev/advent-of-code-2020/day18/cpp/main2.cpp" "/home/amitav/dev/advent-of-code-2020/day18/cpp/CMakeFiles/main2.dir/main2.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

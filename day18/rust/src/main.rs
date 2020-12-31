@@ -1,89 +1,49 @@
 #![allow(dead_code)]
-#![allow(unused_must_use)]
 
 use std::{fs::File, io::{BufReader, BufRead, Error}};
 
 fn main() {
     match read_input_file() {
-        Ok(values) => {
-            part1(values);
+        Ok(input) => {
+            part1(input);
         },
         Err(_) => {}
     }
 }
 
-fn evaluate(exp: String) -> i64 {
-    match exp.find(")") {
-        Some(idx) => {
-            // println!("{}", exp.as_bytes()[idx] as char);
-            let close_idx = idx;
-            let mut open_idx: usize = 0;
-            for i in (0..idx).rev() {
-                if exp.as_bytes()[i] as char == '(' {
-                    open_idx = i + 1;
-                    break;
-                }
-            }
-            let sub_ans = evaluate((&exp[open_idx..close_idx]).to_string());
-            // println!("{}", sub_ans);
-        },
-        None => {
-            // remove_whitespace(&mut exp);
-            let tokens = exp.split(" ");
-            let mut op: char = '!';
-            let mut result = 0;
-            for token in tokens {
-                if token != "*" && token != "+" {
-                    if op == '!' {
-                        result = token.parse::<i64>().unwrap();
-                        continue;
-                    }
-                    if op == '*' {
-                        result *= token.parse::<i64>().unwrap();
-                        continue;
-                    }
-                    if op == '+' {
-                        result += token.parse::<i64>().unwrap();
-                        continue;
-                    }
-                } else {
-                    op = token.as_bytes()[0] as char;
-                }
-            }
-            // println!("res {}", result);
-            return result;
-        },
-    }
-
-    return -1;
+fn solve(exp: String) -> i64 {
+    let result = 0;
+    return result;
 }
 
-fn part1(values: Vec<String>) {
-    // let mut sum: i64 = 0;
-    for exp in values {
-        let val = evaluate(exp.clone());
-        println!("{} {}", exp.clone(), val);
+fn part1(input: Vec<String>) {
+    let mut sum = 0;
+    for line in input {
+        sum += solve(line);
     }
-    // println!("PART 1 {}", sum);
+    println!("PART 1 {}", sum);
+}
+
+fn take_until_char(string: &str, ch: char) -> Result<(&str, &str), Error> {
+    let count = string.chars().take_while(|c| {
+        return *c != ch;
+    }).count();
+
+    return Ok((&string[0..count], &string[count..]));
 }
 
 fn read_input_file() -> Result<Vec<String>, Error> {
-    let file = File::open("input.test")?;
+    let file = File::open("/home/amitav/dev/advent-of-code-2020/day18/rust/src/input.test")?;
     let reader = BufReader::new(file);
-    let mut values: Vec<String> = Vec::new();
-
+    let mut lines: Vec<String> = Vec::new();
     for line in reader.lines() {
         match line {
-            Ok(l) => {
-                values.push(l.to_string());
+            Ok(s) => {
+                lines.push(s);
             },
             Err(_) => {}
         }
     }
 
-    return Ok(values);
-}
-
-fn remove_whitespace(s: &mut String) {
-    s.retain(|c| !c.is_whitespace());
+    return Ok(lines);
 }

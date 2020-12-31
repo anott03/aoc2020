@@ -67,10 +67,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/amitav/dev/advent-of-code-2020/day18
+CMAKE_SOURCE_DIR = /home/amitav/dev/advent-of-code-2020/day18/cpp
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/amitav/dev/advent-of-code-2020/day18
+CMAKE_BINARY_DIR = /home/amitav/dev/advent-of-code-2020/day18/cpp
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -99,9 +99,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/amitav/dev/advent-of-code-2020/day18/CMakeFiles /home/amitav/dev/advent-of-code-2020/day18//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/amitav/dev/advent-of-code-2020/day18/cpp/CMakeFiles /home/amitav/dev/advent-of-code-2020/day18/cpp//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/amitav/dev/advent-of-code-2020/day18/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/amitav/dev/advent-of-code-2020/day18/cpp/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -128,6 +128,19 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+#=============================================================================
+# Target rules for targets named main3
+
+# Build rule for target.
+main3: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 main3
+.PHONY : main3
+
+# fast build rule for target.
+main3/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main3.dir/build.make CMakeFiles/main3.dir/build
+.PHONY : main3/fast
 
 #=============================================================================
 # Target rules for targets named main2
@@ -209,6 +222,33 @@ main2.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main2.dir/build.make CMakeFiles/main2.dir/main2.cpp.s
 .PHONY : main2.cpp.s
 
+main3.o: main3.cpp.o
+
+.PHONY : main3.o
+
+# target to build an object file
+main3.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main3.dir/build.make CMakeFiles/main3.dir/main3.cpp.o
+.PHONY : main3.cpp.o
+
+main3.i: main3.cpp.i
+
+.PHONY : main3.i
+
+# target to preprocess a source file
+main3.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main3.dir/build.make CMakeFiles/main3.dir/main3.cpp.i
+.PHONY : main3.cpp.i
+
+main3.s: main3.cpp.s
+
+.PHONY : main3.s
+
+# target to generate assembly for a file
+main3.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main3.dir/build.make CMakeFiles/main3.dir/main3.cpp.s
+.PHONY : main3.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -219,12 +259,16 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... main"
 	@echo "... main2"
+	@echo "... main3"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
 	@echo "... main2.o"
 	@echo "... main2.i"
 	@echo "... main2.s"
+	@echo "... main3.o"
+	@echo "... main3.i"
+	@echo "... main3.s"
 .PHONY : help
 
 
