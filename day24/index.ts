@@ -57,7 +57,7 @@ const part1 = (): Map<string, string> => {
     }
   }
 
-  console.log(`PART 1 ${blackCounter}`);
+  console.log(`PART 1 ${blackCounter}`)
   return floor;
 }
 

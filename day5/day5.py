@@ -51,7 +51,6 @@ def part2():
             seatId = row * 8 + seat
             ids.append(seatId)
 
-
         for id_ in ids:
             if id_+1 not in ids and id_+2 in ids:
                 print(id_ + 1)
